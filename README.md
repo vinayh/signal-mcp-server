@@ -1,6 +1,8 @@
 # Signal MCP Server
 
-An MCP (Model Context Protocol) server for accessing Signal Desktop messages. This TypeScript/Node.js implementation allows AI assistants to read your Signal chat history.
+An MCP (Model Context Protocol) server for accessing local Signal Desktop messages. This TypeScript/Node.js implementation allows AI assistants to read your Signal chat history.
+
+Ported to Node/Typescript from the [stefanstranger/signal-mcp-server](https://github.com/stefanstranger/signal-mcp-server) project in Python for easier use with Claude and MCPB packaging.
 
 ## Features
 
@@ -32,6 +34,7 @@ An MCP (Model Context Protocol) server for accessing Signal Desktop messages. Th
 3. Add to your Claude Desktop configuration (`claude_desktop_config.json`):
 
    **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+   
    **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
 
    ```json
@@ -39,7 +42,7 @@ An MCP (Model Context Protocol) server for accessing Signal Desktop messages. Th
      "mcpServers": {
        "signal-mcp-server": {
          "command": "node",
-         "args": ["/path/to/signal-mcp-server/dist/index.js"]
+         "args": ["PATH_TO_signal-mcp-server/dist/index.js"]
        }
      }
    }

@@ -1,20 +1,21 @@
 {
-  "manifest_version": "0.3",
-  "name": "signal-mcp-server",
+  "manifest_version": "0.2",
+  "name": "signal-desktop-mcp",
+  "display_name": "Signal Desktop MCP Server",
   "version": "0.1.0",
-  "display_name": "Signal MCP Server",
-  "description": "MCP Server for retrieving Signal messages from Signal Desktop",
+  "description": "MCP server for retrieving Signal messages from the Signal Desktop client",
   "long_description": "This MCP server enables AI agents and tools to access Signal Desktop chat messages via the Model Context Protocol (MCP). It supports listing chats, retrieving messages, and searching within conversations.",
   "author": {
     "name": "Vinay Hiremath",
-    "url": "https://github.com/vinayh"
+    "url": "https://vinayh.com"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/vinayh/signal-mcp-server"
   },
   "license": "MIT",
-  "keywords": ["signal", "messaging", "chat", "mcp"],
+  "homepage": "https://github.com/vinayh/signal-desktop-mcp",
+  "keywords": ["signal", "messaging", "chat", "mcp", "local", "desktop"],
   "server": {
     "type": "node",
     "entry_point": "dist/index.js",
@@ -32,20 +33,20 @@
     "source_dir": {
       "type": "directory",
       "title": "Signal Data Directory",
-      "description": "Path to the Signal Desktop data directory. Leave empty to use the default location for your OS.",
+      "description": "Optional: Path to the Signal Desktop data directory. Leave empty to use the default location for your OS.",
       "required": false
     },
     "password": {
       "type": "string",
       "title": "Database Password",
-      "description": "Password for encrypted Signal database (if applicable)",
+      "description": "Optional: Password for encrypted Signal database, if applicable.",
       "sensitive": true,
       "required": false
     },
     "key": {
       "type": "string",
       "title": "Encryption Key",
-      "description": "Encryption key for Signal database (if applicable)",
+      "description": "Optional: Encryption key for Signal database, if applicable.",
       "sensitive": true,
       "required": false
     }
@@ -67,19 +68,36 @@
   "prompts": [
     {
       "name": "signal_summarize_chat_prompt",
-      "description": "Generate a summary prompt for recent messages in a specific chat"
+      "description": "Generate a summary prompt for recent messages in a specific chat",
+      "arguments": [
+        "chat_name"
+      ],
+      "text": "Summarize the recent messages in the Signal chat named '${chatName}'."
     },
     {
       "name": "signal_chat_topic_prompt",
-      "description": "Generate a prompt to analyze discussion topics in a chat"
+      "description": "Generate a prompt to analyze discussion topics in a chat",
+      "arguments": [
+        "chat_name"
+      ],
+      "text": "What are the topics of discussion in the Signal chat named '${chatName}'?"
     },
     {
       "name": "signal_chat_sentiment_prompt",
-      "description": "Generate a prompt to analyze message sentiment in a chat"
+      "description": "Generate a prompt to analyze message sentiment in a chat",
+      "arguments": [
+        "chat_name"
+      ],
+      "text": "Analyze the sentiment of messages in the Signal chat named '${chatName}'."
     },
     {
       "name": "signal_search_chat_prompt",
-      "description": "Generate a search prompt for finding specific text in a chat"
+      "description": "Generate a search prompt for finding specific text in a chat",
+      "arguments": [
+        "chat_name",
+        "query"
+      ],
+      "text": "Search for the text '${query}' in the Signal chat named '${chatName}'."
     }
   ],
   "compatibility": {
@@ -88,6 +106,5 @@
     "runtimes": {
       "node": ">=18"
     }
-  },
-  "privacy_policies": []
+  }
 }

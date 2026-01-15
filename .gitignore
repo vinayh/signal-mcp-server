@@ -2,6 +2,9 @@
 python_impl_OLD/
 .venv/
 
+# MCPB
+*.mcpb
+
 # macOS
 .DS_Store
 
