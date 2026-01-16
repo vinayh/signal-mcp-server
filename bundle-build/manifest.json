@@ -1,0 +1,95 @@
+{
+  "manifest_version": "0.3",
+  "name": "signal-desktop-mcp",
+  "display_name": "Signal Desktop MCP Server",
+  "version": "0.1.0",
+  "description": "Access your Signal Desktop messages through AI assistants",
+  "long_description": "This MCP server enables AI agents and tools to access Signal Desktop chat messages via the Model Context Protocol (MCP). It supports listing chats, retrieving messages with pagination, and searching within conversations. Signal Desktop must be closed when using this server. All data remains local - nothing is sent externally.",
+  "author": {
+    "name": "Vinay Hiremath",
+    "url": "https://vinayh.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vinayh/signal-desktop-mcp"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/vinayh/signal-desktop-mcp",
+  "keywords": ["signal", "messaging", "chat", "mcp", "local", "desktop"],
+  "server": {
+    "type": "node",
+    "entry_point": "server/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/server/index.js"],
+      "env": {
+        "SIGNAL_SOURCE_DIR": "${user_config.source_dir}",
+        "SIGNAL_KEY": "${user_config.key}"
+      }
+    }
+  },
+  "user_config": {
+    "source_dir": {
+      "type": "directory",
+      "title": "Signal Data Directory",
+      "description": "Path to Signal Desktop data directory. Leave empty to use the default location for your OS (macOS: ~/Library/Application Support/Signal, Windows: %APPDATA%/Signal, Linux: ~/.config/Signal).",
+      "required": false
+    },
+    "key": {
+      "type": "string",
+      "title": "Encryption Key",
+      "description": "Signal database encryption key. On macOS this is automatically retrieved from the Keychain. Only needed if automatic detection fails.",
+      "sensitive": true,
+      "required": false
+    }
+  },
+  "tools": [
+    {
+      "name": "signal_list_chats",
+      "description": "List all Signal chats with their details including contact names, numbers, and message counts"
+    },
+    {
+      "name": "signal_get_chat_messages",
+      "description": "Retrieve messages from a specific Signal chat by contact name with pagination support"
+    },
+    {
+      "name": "signal_search_chat",
+      "description": "Search for specific text within a Signal chat's messages"
+    }
+  ],
+  "tools_generated": false,
+  "prompts": [
+    {
+      "name": "signal_summarize_chat_prompt",
+      "description": "Generate a summary prompt for recent messages in a specific chat",
+      "arguments": ["chat_name"],
+      "text": "Summarize the recent messages in the Signal chat named '${arguments.chat_name}'."
+    },
+    {
+      "name": "signal_chat_topic_prompt",
+      "description": "Generate a prompt to analyze discussion topics in a chat",
+      "arguments": ["chat_name"],
+      "text": "What are the topics of discussion in the Signal chat named '${arguments.chat_name}'?"
+    },
+    {
+      "name": "signal_chat_sentiment_prompt",
+      "description": "Generate a prompt to analyze message sentiment in a chat",
+      "arguments": ["chat_name"],
+      "text": "Analyze the sentiment of messages in the Signal chat named '${arguments.chat_name}'."
+    },
+    {
+      "name": "signal_search_chat_prompt",
+      "description": "Generate a search prompt for finding specific text in a chat",
+      "arguments": ["chat_name", "query"],
+      "text": "Search for the text '${arguments.query}' in the Signal chat named '${arguments.chat_name}'."
+    }
+  ],
+  "prompts_generated": false,
+  "compatibility": {
+    "claude_desktop": ">=0.10.0",
+    "platforms": ["darwin", "win32", "linux"],
+    "runtimes": {
+      "node": ">=18"
+    }
+  }
+}
