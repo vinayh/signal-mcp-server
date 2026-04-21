@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+
+# Build output (we rebuild in Docker)
+dist/
+
+# Development files
+*.log
+npm-debug.log*
+.npm
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Docker
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# Environment files (secrets should be passed at runtime)
+.env
+.env.*
+
+# Documentation
+*.md
+LICENSE
